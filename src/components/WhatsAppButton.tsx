@@ -1,52 +1,70 @@
 'use client';
 
 import { MessageCircle } from 'lucide-react';
-import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function WhatsAppButton() {
-  const [isHovered, setIsHovered] = useState(false);
-  const phoneNumber = '40736820138'; // 0736 820 138 in format internațional
+  const phoneNumber = '0736820138'; // Format: fără spații, fără +40
   const message = encodeURIComponent('Bună! Aș dori să aflu mai multe despre Reverb Project.');
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+  const whatsappUrl = `https://wa.me/40${phoneNumber}?text=${message}`;
 
   return (
-    <a
+    <motion.a
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 group md:bottom-8 md:right-8"
-      aria-label="Contact pe WhatsApp"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className="fixed bottom-6 right-6 z-50 group"
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ delay: 1, duration: 0.3 }}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      aria-label="Contactează-ne pe WhatsApp"
     >
+      {/* Tooltip */}
+      <motion.div
+        className="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-4 py-2 bg-black/90 backdrop-blur-sm text-white text-sm font-medium rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-white/10"
+        initial={{ x: 10, opacity: 0 }}
+        whileHover={{ x: 0, opacity: 1 }}
+      >
+        Scrie-ne pe WhatsApp
+      </motion.div>
+
+      {/* Button */}
       <div className="relative">
-        {/* Outer glow effect - mai intens la hover */}
-        <div className="absolute -inset-3 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-full blur-xl group-hover:from-green-500/40 group-hover:to-emerald-500/40 transition-all duration-700 group-hover:blur-2xl" />
-        
-        {/* Main button - shadow mai puternic, tranziție mai smooth */}
-        <div className="relative bg-gradient-to-br from-[#25D366] to-[#20BA5A] hover:from-[#20BA5A] hover:to-[#1DA851] text-white rounded-full p-4 md:p-5 shadow-[0_8px_32px_rgba(37,211,102,0.4)] hover:shadow-[0_12px_48px_rgba(37,211,102,0.6)] transition-all duration-500 group-hover:scale-110 border border-green-400/30 backdrop-blur-sm">
-          <MessageCircle className="w-6 h-6 md:w-7 md:h-7" strokeWidth={2.5} />
-        </div>
+        {/* Glow effect - mai intens ca la Global Records */}
+        <motion.div
+          className="absolute inset-0 bg-green-500/40 rounded-full blur-xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.5, 0.8, 0.5],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
 
-        {/* Pulse rings - doar când nu e hover */}
-        {!isHovered && (
-          <>
-            <div className="absolute inset-0 rounded-full bg-green-500/30 animate-ping opacity-75" style={{ animationDuration: '2.5s' }} />
-            <div className="absolute inset-0 rounded-full bg-green-500/20 animate-ping" style={{ animationDuration: '2.5s', animationDelay: '1.25s' }} />
-          </>
-        )}
+        {/* Outer ring - pulse animation */}
+        <motion.div
+          className="absolute inset-0 rounded-full bg-green-500/30 ring-2 ring-green-500/50"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.7, 0, 0.7],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeOut",
+          }}
+        />
 
-        {/* Tooltip on hover - mai elegant */}
-        <div className={`absolute bottom-full right-0 mb-3 transition-all duration-300 ease-out ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'}`}>
-          <div className="bg-zinc-900/95 backdrop-blur-md text-white text-sm font-medium px-5 py-2.5 rounded-xl shadow-2xl border border-zinc-700/50 whitespace-nowrap">
-            Scrie-ne pe WhatsApp
-            {/* Arrow */}
-            <div className="absolute top-full right-7 -mt-px">
-              <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-zinc-900/95" />
-            </div>
-          </div>
+        {/* Main button */}
+        <div className="relative w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center shadow-2xl shadow-green-500/50 group-hover:shadow-green-500/80 transition-shadow duration-300">
+          <MessageCircle className="w-7 h-7 md:w-8 md:h-8 text-white" strokeWidth={2} />
         </div>
       </div>
-    </a>
+    </motion.a>
   );
 }
