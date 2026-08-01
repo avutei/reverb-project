@@ -4,7 +4,7 @@ import { MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function WhatsAppButton() {
-  const phoneNumber = '0736820138';
+  const phoneNumber = '736820138';
   const message = encodeURIComponent('Bună! Aș dori să aflu mai multe despre Reverb Project.');
   const whatsappUrl = `https://wa.me/40${phoneNumber}?text=${message}`;
 
