@@ -4,7 +4,7 @@ import { MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function WhatsAppButton() {
-  const phoneNumber = '0736820138'; // Format: fără spații, fără +40
+  const phoneNumber = '0736820138';
   const message = encodeURIComponent('Bună! Aș dori să aflu mai multe despre Reverb Project.');
   const whatsappUrl = `https://wa.me/40${phoneNumber}?text=${message}`;
 
@@ -32,7 +32,7 @@ export default function WhatsAppButton() {
 
       {/* Button */}
       <div className="relative">
-        {/* Glow effect - mai intens ca la Global Records */}
+        {/* Glow effect */}
         <motion.div
           className="absolute inset-0 bg-green-500/40 rounded-full blur-xl"
           animate={{
@@ -46,7 +46,7 @@ export default function WhatsAppButton() {
           }}
         />
 
-        {/* Outer ring - pulse animation */}
+        {/* Pulse ring */}
         <motion.div
           className="absolute inset-0 rounded-full bg-green-500/30 ring-2 ring-green-500/50"
           animate={{
