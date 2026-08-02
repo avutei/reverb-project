@@ -1,197 +1,178 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Play, ArrowRight } from 'lucide-react';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 
 export default function Home() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"]
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, 300]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const artists = [
+    'Marian Călugăru',
+    'Daniel Brumă', 
+    'Paul Buciuman',
+    'Cornel Borbei',
+    'Răzvan Peicu',
+    'Silviu Pașca',
+    'Mihai Gherase',
+    'Ovidiu Pușcașu'
+  ];
 
   return (
     <main className="bg-black text-white">
-      {/* Hero - Video Background Style */}
-      <section ref={heroRef} className="relative h-screen overflow-hidden">
-        {/* Video Background Placeholder */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-900/50 to-black">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_black_100%)]" />
-        </div>
-
-        {/* Content */}
-        <motion.div 
-          style={{ y, opacity }}
-          className="relative h-full flex flex-col items-center justify-center px-6 text-center"
+      {/* Hero - Minimal ca Global Records */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <h1 className="text-[20vw] md:text-[180px] font-black tracking-[-0.05em] leading-none mb-6">
-              REVERB
-            </h1>
-            <p className="text-sm md:text-base text-zinc-400 tracking-[0.4em] uppercase font-light mb-8">
-              Professional Live Band
-            </p>
-            <div className="flex items-center justify-center gap-3 text-xs md:text-sm text-zinc-600">
-              <span>București</span>
-              <div className="w-1 h-1 rounded-full bg-zinc-700" />
-              <span>România</span>
-            </div>
-          </motion.div>
+          {/* Logo gigant */}
+          <h1 className="text-[15vw] md:text-[12vw] lg:text-[180px] font-black tracking-[-0.04em] leading-none mb-8">
+            REVERB
+          </h1>
+          
+          {/* Tagline minimal */}
+          <p className="text-sm md:text-base text-zinc-500 tracking-[0.3em] uppercase font-light">
+            Professional Live Band
+          </p>
         </motion.div>
 
-        {/* Scroll Indicator */}
+        {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2"
+          transition={{ delay: 1.2 }}
+          className="absolute bottom-12"
         >
           <motion.div
-            animate={{ y: [0, 10, 0] }}
+            animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="w-[1px] h-16 bg-gradient-to-b from-zinc-700 to-transparent"
-          />
+          >
+            <ChevronDown className="w-6 h-6 text-zinc-700" strokeWidth={1} />
+          </motion.div>
         </motion.div>
       </section>
 
-      {/* About Section */}
-      <section className="relative py-32 md:py-48 px-6 border-t border-zinc-900">
-        <div className="max-w-6xl mx-auto">
+      {/* Artists Grid - Ca Global Records */}
+      <section className="py-24 md:py-32 px-6">
+        <div className="max-w-[1400px] mx-auto">
+          {/* Heading minimal */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="space-y-12"
-          >
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
-              Band profesionist de instrumentiști, colaborând cu artiști creștini din România.
-            </h2>
-            
-            <div className="grid md:grid-cols-2 gap-12 text-lg md:text-xl text-zinc-400 leading-relaxed">
-              <p>
-                Experiență vastă pe cele mai mari scene din țară. Adaptabilitate completă la orice stil și artist, cu echipament premium și sunet impecabil.
-              </p>
-              <p>
-                De la evenimente private la concerte în aer liber, oferim performanță live la cele mai înalte standarde pentru evenimente de neuitat.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Artists Section */}
-      <section className="relative py-32 px-6 border-t border-zinc-900">
-        <div className="max-w-6xl mx-auto">
-          <motion.h3
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-xs tracking-[0.4em] uppercase text-zinc-600 mb-20"
+            className="mb-16 md:mb-20"
           >
-            Featured Artists
-          </motion.h3>
+            <h2 className="text-xs tracking-[0.4em] uppercase text-zinc-600 font-light">
+              Artists
+            </h2>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            {[
-              'Marian Călugăru',
-              'Daniel Brumă',
-              'Paul Buciuman',
-              'Cornel Borbei',
-              'Răzvan Peicu',
-              'Silviu Pașca'
-            ].map((artist, i) => (
+          {/* Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {artists.map((artist, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
+                transition={{ delay: i * 0.05, duration: 0.5 }}
                 className="group cursor-pointer"
               >
-                <div className="aspect-square bg-zinc-950 mb-4 overflow-hidden relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-zinc-900/50 to-black group-hover:opacity-70 transition-opacity duration-500" />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="w-12 h-12 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm flex items-center justify-center">
-                      <Play className="w-4 h-4 fill-white ml-0.5" strokeWidth={0} />
-                    </div>
-                  </div>
+                {/* Image placeholder */}
+                <div className="aspect-square bg-zinc-950 mb-4 relative overflow-hidden">
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-zinc-900/30 to-black/50" />
+                  
+                  {/* Hover effect - subtle */}
+                  <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-all duration-500" />
                 </div>
-                <h4 className="text-lg font-medium">{artist}</h4>
-                <p className="text-sm text-zinc-600">Artist</p>
+
+                {/* Artist info */}
+                <div>
+                  <h3 className="text-sm md:text-base font-medium mb-1 group-hover:text-zinc-400 transition-colors duration-300">
+                    {artist}
+                  </h3>
+                  <p className="text-xs text-zinc-600">Artist</p>
+                </div>
               </motion.div>
             ))}
           </div>
 
+          {/* More info */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-center"
+            className="mt-20 text-center"
           >
-            <p className="text-zinc-500 mb-6">și mulți alți artiști consacrați</p>
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 text-sm border border-zinc-800 hover:border-zinc-700 px-8 py-4 transition-colors"
-            >
-              <span>Contactează-ne pentru detalii</span>
-              <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
-            </a>
+            <p className="text-sm text-zinc-600">și mulți alți artiști consacrați</p>
           </motion.div>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="relative py-32 px-6 border-t border-zinc-900">
-        <div className="max-w-6xl mx-auto">
+      {/* About Section - Minimal */}
+      <section className="py-24 md:py-32 px-6 border-t border-zinc-900/50">
+        <div className="max-w-3xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="space-y-8"
+          >
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1]">
+              Band profesionist de instrumentiști, colaborând cu artiști creștini din România.
+            </h2>
+            
+            <p className="text-lg md:text-xl text-zinc-500 leading-relaxed">
+              Experiență vastă pe cele mai mari scene din țară. Adaptabilitate completă la orice stil și artist, 
+              cu echipament premium și sunet impecabil.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Services - Minimal List */}
+      <section className="py-24 md:py-32 px-6 border-t border-zinc-900/50">
+        <div className="max-w-4xl mx-auto">
           <motion.h3
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-xs tracking-[0.4em] uppercase text-zinc-600 mb-20"
+            className="text-xs tracking-[0.4em] uppercase text-zinc-600 font-light mb-16"
           >
-            Servicii
+            Services
           </motion.h3>
 
-          <div className="space-y-0">
+          <div className="space-y-12 md:space-y-16">
             {[
               {
                 title: 'Live Performance',
-                desc: 'Band complet cu echipament premium pentru orice tip de eveniment - conferințe, festivaluri, evenimente private.'
+                desc: 'Concerte și evenimente cu sonorizare profesională'
               },
               {
                 title: 'Artist Features',
-                desc: 'Colaborări cu artiști consacrați din scena creștină românească. Repertoriu vast adaptat oricărui stil.'
+                desc: 'Colaborări cu artiști consacrați din scena românească'
               },
               {
                 title: 'Studio Production',
-                desc: 'Înregistrări live, mixing și mastering profesional pentru proiecte muzicale de calitate.'
+                desc: 'Înregistrări live, mixing și mastering profesional'
               }
             ].map((service, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: i * 0.15, duration: 0.6 }}
-                className="group border-t border-zinc-900 py-12 md:py-16 hover:border-zinc-800 transition-colors"
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                className="group"
               >
-                <div className="grid md:grid-cols-3 gap-8">
-                  <h4 className="text-3xl md:text-4xl font-bold tracking-tight">
-                    {service.title}
-                  </h4>
-                  <p className="md:col-span-2 text-lg md:text-xl text-zinc-400 leading-relaxed">
-                    {service.desc}
-                  </p>
-                </div>
+                <h4 className="text-2xl md:text-3xl font-medium mb-3 group-hover:text-zinc-400 transition-colors duration-300">
+                  {service.title}
+                </h4>
+                <p className="text-base md:text-lg text-zinc-600">
+                  {service.desc}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -199,43 +180,41 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="relative py-40 md:py-56 px-6 border-t border-zinc-900">
-        <div className="max-w-4xl mx-auto text-center">
+      <section id="contact" className="py-32 md:py-40 px-6 border-t border-zinc-900/50">
+        <div className="max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
+            className="text-center space-y-12"
           >
-            <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8">
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
               Let's Work
             </h2>
-            <p className="text-lg md:text-xl text-zinc-500 mb-20 max-w-xl mx-auto">
-              Contactează-ne pentru o ofertă personalizată
-            </p>
 
-            <div className="grid md:grid-cols-2 gap-6 mb-20">
+            <div className="space-y-6 text-zinc-500">
               <a
                 href="tel:0736820138"
-                className="group p-10 md:p-12 bg-zinc-950/30 hover:bg-zinc-950/50 border border-zinc-900 hover:border-zinc-800 transition-all text-left"
+                className="block text-lg md:text-xl hover:text-white transition-colors duration-300"
               >
-                <p className="text-xs text-zinc-600 mb-6 uppercase tracking-[0.3em]">Phone</p>
-                <p className="text-2xl md:text-3xl font-medium mb-3">0736 820 138</p>
-                <p className="text-xl text-zinc-500">0724 046 665</p>
+                0736 820 138
               </a>
-
+              <a
+                href="tel:0724046665"
+                className="block text-lg md:text-xl hover:text-white transition-colors duration-300"
+              >
+                0724 046 665
+              </a>
               <a
                 href="mailto:vreaucuvoi@reverbproject.ro"
-                className="group p-10 md:p-12 bg-zinc-950/30 hover:bg-zinc-950/50 border border-zinc-900 hover:border-zinc-800 transition-all text-left"
+                className="block text-base md:text-lg hover:text-white transition-colors duration-300"
               >
-                <p className="text-xs text-zinc-600 mb-6 uppercase tracking-[0.3em]">Email</p>
-                <p className="text-base md:text-lg break-all">
-                  vreaucuvoi@<br className="md:hidden" />reverbproject.ro
-                </p>
+                vreaucuvoi@reverbproject.ro
               </a>
             </div>
 
-            <div className="flex items-center justify-center gap-3 text-sm text-zinc-700">
+            <div className="pt-8 flex items-center justify-center gap-3 text-xs text-zinc-700">
               <span>București, România</span>
               <div className="w-1 h-1 rounded-full bg-zinc-800" />
               <span>2025</span>
@@ -244,18 +223,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative border-t border-zinc-900 py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
-            <div className="text-4xl font-black tracking-tight">REVERB</div>
-            <div className="flex gap-8 text-sm text-zinc-600">
-              <a href="#" className="hover:text-zinc-400 transition-colors">Instagram</a>
-              <a href="#" className="hover:text-zinc-400 transition-colors">Facebook</a>
-              <a href="#" className="hover:text-zinc-400 transition-colors">YouTube</a>
+      {/* Footer - Ca Global Records */}
+      <footer className="border-t border-zinc-900/50 py-12 px-6">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            {/* Logo */}
+            <div className="text-2xl md:text-3xl font-black tracking-tight">
+              REVERB
+            </div>
+
+            {/* Social links minimal */}
+            <div className="flex gap-8 text-xs text-zinc-600">
+              <a href="#" className="hover:text-zinc-400 transition-colors duration-300">
+                Instagram
+              </a>
+              <a href="#" className="hover:text-zinc-400 transition-colors duration-300">
+                Facebook
+              </a>
+              <a href="#" className="hover:text-zinc-400 transition-colors duration-300">
+                YouTube
+              </a>
             </div>
           </div>
-          <div className="text-center text-xs text-zinc-700">
+
+          {/* Copyright */}
+          <div className="mt-12 text-center text-xs text-zinc-800">
             © 2025 Reverb Project. All rights reserved.
           </div>
         </div>
