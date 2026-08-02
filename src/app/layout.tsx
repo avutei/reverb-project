@@ -1,21 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Reverb Project - Band Profesionist",
-  description: "Band profesionist pentru evenimentul tău. Orice artist. Orice scenă.",
+  title: "REVERB — Professional Live Band",
+  description: "Band profesionist pentru evenimente de neuitat. Colaborări cu artiști creștini din România.",
+  openGraph: {
+    title: "REVERB — Professional Live Band",
+    description: "Band profesionist pentru evenimente de neuitat.",
+    siteName: "Reverb Project",
+    locale: "ro_RO",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -26,9 +29,9 @@ export default function RootLayout({
   return (
     <html
       lang="ro"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-black">
+      <body className="bg-black font-sans">
         {children}
         <WhatsAppButton />
       </body>
