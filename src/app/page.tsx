@@ -1,53 +1,51 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Music, Users, Sparkles, ArrowRight } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
 import { useRef } from 'react';
 
 export default function Home() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: heroRef,
     offset: ["start start", "end start"]
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 0.5], [0, -100]);
 
   return (
     <main className="bg-black text-white">
-      {/* Hero Section - Full screen cu parallax */}
-      <section ref={containerRef} className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/20 via-black to-black" />
-        
-        {/* Ambient light effect */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-white/[0.02] rounded-full blur-3xl" />
-
+      {/* Hero - Ultra Minimal */}
+      <section ref={heroRef} className="relative h-screen flex items-center justify-center">
         <motion.div 
-          style={{ opacity, scale }}
-          className="relative z-10 text-center px-6"
+          style={{ opacity: heroOpacity, y: heroY }}
+          className="text-center px-6"
         >
-          {/* Logo/Title */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+            className="text-[18vw] md:text-[200px] font-black tracking-[-0.06em] leading-[0.85] mb-12"
           >
-            <h1 className="text-[15vw] md:text-[180px] font-black tracking-[-0.05em] leading-[0.85] mb-8">
-              REVERB
-            </h1>
-            <div className="h-[1px] w-24 bg-white/40 mx-auto mb-8" />
-          </motion.div>
-
-          <motion.p
+            REVERB
+          </motion.h1>
+          
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="text-lg md:text-xl text-zinc-400 tracking-[0.2em] uppercase font-light"
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="space-y-4"
           >
-            Band Profesionist
-          </motion.p>
+            <p className="text-base md:text-lg text-zinc-500 tracking-[0.3em] uppercase font-light">
+              Professional Live Band
+            </p>
+            <div className="flex items-center justify-center gap-3 text-sm text-zinc-600">
+              <span>București</span>
+              <span className="w-1 h-1 rounded-full bg-zinc-700" />
+              <span>România</span>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Scroll indicator */}
@@ -55,213 +53,236 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="absolute bottom-12 left-1/2 -translate-x-1/2"
+          className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
+          <span className="text-xs text-zinc-600 tracking-widest uppercase">Scroll</span>
           <motion.div
-            animate={{ y: [0, 12, 0] }}
+            animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            className="w-[1px] h-16 bg-gradient-to-b from-white/0 via-white/50 to-white/0"
+            className="w-[1px] h-12 bg-gradient-to-b from-zinc-800 to-transparent"
           />
         </motion.div>
       </section>
 
-      {/* Statement Section */}
-      <section className="relative py-40 px-6">
-        <div className="max-w-6xl mx-auto">
+      {/* Statement - Single Block */}
+      <section className="relative py-32 md:py-48 px-6 border-t border-zinc-900">
+        <div className="max-w-5xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
+            transition={{ duration: 0.7 }}
           >
-            <h2 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight">
-              Orice artist.<br />
-              Orice scenă.<br />
-              <span className="text-zinc-600">Un singur band.</span>
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-12">
+              Colaborăm cu artiști creștini din România pentru evenimente de neuitat.
             </h2>
-            <p className="text-xl md:text-2xl text-zinc-400 max-w-3xl leading-relaxed">
-              Colaborăm cu artiști creștini din România pentru evenimente memorabile. 
-              Instrumentiști profesioniști, sunet impecabil, experiență completă.
-            </p>
+            <div className="grid md:grid-cols-2 gap-x-16 gap-y-8 text-lg md:text-xl text-zinc-400 leading-relaxed">
+              <p>
+                Band profesionist de instrumentiști cu experiență vastă pe cele mai mari scene din țară. Adaptabilitate completă la orice stil și artist.
+              </p>
+              <p>
+                De la evenimente private la concerte în aer liber, oferim sunet impecabil și performanță la cele mai înalte standarde.
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="relative py-32 px-6 border-y border-zinc-900">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-[1px] bg-zinc-900">
+      {/* Services - Minimal List */}
+      <section className="relative py-32 px-6 border-t border-zinc-900">
+        <div className="max-w-5xl mx-auto">
+          <motion.h3
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="text-xs tracking-[0.3em] uppercase text-zinc-600 mb-16"
+          >
+            Servicii
+          </motion.h3>
+
+          <div className="space-y-0">
             {[
               {
-                icon: Music,
                 title: 'Live Performance',
-                desc: 'Band complet de instrumentiști cu echipament premium și experiență vastă pe scene de orice dimensiune.'
+                desc: 'Band complet cu echipament premium pentru orice tip de eveniment'
               },
               {
-                icon: Users,
                 title: 'Artist Features',
-                desc: 'Colaborări cu cei mai apreciați artiști creștini din România pentru evenimente de neuitat.'
+                desc: 'Colaborări cu artiști consacrați din scena creștină românească'
               },
               {
-                icon: Sparkles,
-                title: 'Producție Audio',
-                desc: 'Înregistrări studio, mixing și mastering profesional pentru lansări și proiecte speciale.'
+                title: 'Studio Production',
+                desc: 'Înregistrări, mixing și mastering profesional'
               }
             ].map((service, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="bg-black p-12 group hover:bg-zinc-950 transition-colors duration-500"
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className="group border-t border-zinc-900 py-10 md:py-12 hover:border-zinc-800 transition-colors duration-300"
               >
-                <service.icon className="w-10 h-10 mb-6 text-zinc-600 group-hover:text-white transition-colors duration-500" strokeWidth={1.5} />
-                <h3 className="text-2xl font-bold mb-4 tracking-tight">{service.title}</h3>
-                <p className="text-zinc-500 leading-relaxed">{service.desc}</p>
+                <div className="grid md:grid-cols-3 gap-6 md:gap-12">
+                  <h4 className="text-2xl md:text-3xl font-bold tracking-tight">
+                    {service.title}
+                  </h4>
+                  <p className="md:col-span-2 text-lg text-zinc-500 leading-relaxed">
+                    {service.desc}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Media Gallery */}
-      <section className="relative py-40 px-6">
+      {/* Media Grid - Record Label Style */}
+      <section className="relative py-32 px-6 border-t border-zinc-900">
         <div className="max-w-7xl mx-auto">
-          <motion.h2
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold mb-20 tracking-tight"
+            className="mb-16 flex justify-between items-end"
           >
-            Recent
-          </motion.h2>
+            <h3 className="text-xs tracking-[0.3em] uppercase text-zinc-600">
+              Recent Work
+            </h3>
+            <span className="text-sm text-zinc-700">2024 – 2025</span>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-2 gap-3">
             {[1, 2, 3, 4].map((i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group relative aspect-video bg-zinc-950 overflow-hidden cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="group relative aspect-[16/10] bg-zinc-950 overflow-hidden cursor-pointer"
               >
-                {/* Placeholder gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-zinc-800/20 via-zinc-900/40 to-black" />
+                <div className="absolute inset-0 bg-gradient-to-br from-zinc-900/30 via-black to-black" />
                 
-                {/* Play button overlay */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-20 h-20 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-white/10 transition-all duration-500">
-                    <div className="w-0 h-0 border-l-[16px] border-l-white border-t-[10px] border-t-transparent border-b-[10px] border-b-transparent ml-1" />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="w-16 h-16 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                    <Play className="w-6 h-6 fill-white ml-1" strokeWidth={0} />
                   </div>
                 </div>
 
-                {/* Bottom fade */}
-                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/80 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
+                  <p className="text-xs text-zinc-600 mb-1">Video {i}</p>
+                  <p className="text-sm text-zinc-400">Coming Soon</p>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Artists Showcase */}
-      <section className="relative py-40 px-6 border-t border-zinc-900">
+      {/* Featured Artists Preview */}
+      <section className="relative py-32 px-6 border-t border-zinc-900">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-20 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-5xl md:text-6xl font-bold mb-8 tracking-tight leading-tight">
-                Colaborări cu artiști consacrați
-              </h2>
-              <p className="text-xl text-zinc-400 leading-relaxed mb-8">
-                Repertoriu vast, adaptabilitate completă și experiență pe cele mai mari scene din România.
-              </p>
-              <a 
-                href="#contact"
-                className="inline-flex items-center gap-3 text-white group"
+          <div className="grid md:grid-cols-5 gap-12 md:gap-20 items-center">
+            <div className="md:col-span-2">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
               >
-                <span className="text-lg">Vezi artiștii</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" strokeWidth={1.5} />
-              </a>
-            </motion.div>
+                <h3 className="text-xs tracking-[0.3em] uppercase text-zinc-600 mb-8">
+                  Featured Artists
+                </h3>
+                <h4 className="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-8">
+                  Colaborări cu artiști consacrați
+                </h4>
+                <p className="text-lg text-zinc-500 leading-relaxed mb-10">
+                  Repertoriu vast, experiență pe cele mai mari scene din România.
+                </p>
+                <a 
+                  href="#contact"
+                  className="inline-flex items-center gap-2 text-sm text-white border border-zinc-800 hover:border-zinc-700 px-6 py-3 transition-colors duration-300"
+                >
+                  <span>Vezi mai mult</span>
+                  <ArrowRight className="w-4 h-4" strokeWidth={1.5} />
+                </a>
+              </motion.div>
+            </div>
 
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
+              initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="grid grid-cols-3 gap-4"
+              transition={{ duration: 0.7 }}
+              className="md:col-span-3 grid grid-cols-4 gap-2"
             >
-              {[...Array(9)].map((_, i) => (
+              {[...Array(12)].map((_, i) => (
                 <div
                   key={i}
-                  className="aspect-square bg-zinc-950 hover:bg-zinc-900 transition-colors duration-500"
-                >
-                  <div className="w-full h-full bg-gradient-to-br from-zinc-800/10 to-transparent" />
-                </div>
+                  className="aspect-square bg-zinc-950 hover:bg-zinc-900 transition-colors duration-500 border border-zinc-900/50"
+                />
               ))}
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section id="contact" className="relative py-40 px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      {/* Contact - Clean & Direct */}
+      <section id="contact" className="relative py-40 md:py-56 px-6 border-t border-zinc-900">
+        <div className="max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
+            className="text-center"
           >
-            <h2 className="text-5xl md:text-7xl font-bold mb-8 tracking-tight">
-              Vorbim?
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6">
+              Let's Talk
             </h2>
-            <p className="text-xl text-zinc-400 mb-16 max-w-2xl mx-auto">
-              Contactează-ne pentru o ofertă personalizată pentru evenimentul tău.
+            <p className="text-lg md:text-xl text-zinc-500 mb-20 max-w-xl mx-auto">
+              Contactează-ne pentru o ofertă personalizată
             </p>
 
-            <div className="grid md:grid-cols-2 gap-6 mb-12">
+            <div className="grid md:grid-cols-2 gap-4 mb-16 text-left">
               <a
                 href="tel:0736820138"
-                className="group relative p-10 bg-zinc-950 hover:bg-zinc-900 border border-zinc-900 hover:border-zinc-800 transition-all duration-500 overflow-hidden"
+                className="group p-8 md:p-10 bg-zinc-950/50 hover:bg-zinc-950 border border-zinc-900 hover:border-zinc-800 transition-all duration-300"
               >
-                <div className="relative z-10">
-                  <p className="text-sm text-zinc-600 mb-3 uppercase tracking-wider">Telefon</p>
-                  <p className="text-2xl font-bold">0736 820 138</p>
-                  <p className="text-xl text-zinc-400 mt-2">0724 046 665</p>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <p className="text-xs text-zinc-600 mb-4 uppercase tracking-wider">Phone</p>
+                <p className="text-xl md:text-2xl font-medium mb-2">0736 820 138</p>
+                <p className="text-lg text-zinc-500">0724 046 665</p>
               </a>
 
               <a
                 href="mailto:vreaucuvoi@reverbproject.ro"
-                className="group relative p-10 bg-zinc-950 hover:bg-zinc-900 border border-zinc-900 hover:border-zinc-800 transition-all duration-500 overflow-hidden"
+                className="group p-8 md:p-10 bg-zinc-950/50 hover:bg-zinc-950 border border-zinc-900 hover:border-zinc-800 transition-all duration-300"
               >
-                <div className="relative z-10">
-                  <p className="text-sm text-zinc-600 mb-3 uppercase tracking-wider">Email</p>
-                  <p className="text-lg">vreaucuvoi@reverbproject.ro</p>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <p className="text-xs text-zinc-600 mb-4 uppercase tracking-wider">Email</p>
+                <p className="text-base md:text-lg break-all">vreaucuvoi@reverbproject.ro</p>
               </a>
+            </div>
+
+            <div className="flex items-center justify-center gap-3 text-sm text-zinc-700">
+              <span>București</span>
+              <span className="w-1 h-1 rounded-full bg-zinc-800" />
+              <span>România</span>
+              <span className="w-1 h-1 rounded-full bg-zinc-800" />
+              <span>2025</span>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative border-t border-zinc-900 py-16 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-zinc-700 text-sm">© 2025 Reverb Project. All rights reserved.</p>
-          <div className="flex gap-8 text-sm text-zinc-700">
-            <span>reverbproject.ro</span>
-            <span>București, România</span>
+      {/* Footer - Minimal */}
+      <footer className="relative border-t border-zinc-900 py-12 px-6">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-zinc-700">© 2025 Reverb Project</p>
+          <div className="flex gap-6 text-sm text-zinc-700">
+            <a href="#" className="hover:text-zinc-500 transition-colors">Instagram</a>
+            <a href="#" className="hover:text-zinc-500 transition-colors">Facebook</a>
+            <a href="#" className="hover:text-zinc-500 transition-colors">YouTube</a>
           </div>
         </div>
       </footer>
