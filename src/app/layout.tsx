@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/navbar";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 const inter = Inter({
@@ -32,6 +33,7 @@ export default function RootLayout({
       className={`${inter.variable} antialiased`}
     >
       <body className="bg-black font-sans">
+        <Navbar />
         {children}
         <WhatsAppButton />
       </body>
